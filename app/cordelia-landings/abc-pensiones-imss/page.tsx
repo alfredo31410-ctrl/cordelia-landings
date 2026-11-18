@@ -46,11 +46,7 @@ export default function AbcPensionesImssLanding() {
               unoptimized
               className="h-auto w-48 sm:w-56"
             />
-            <div className="mt-6 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-xs font-black tracking-wide sm:mt-10 sm:text-sm">
-              CLASE GRATUITA EN VIVO PARA CONTADORES, ABOGADOS Y ASESORES
-            </div>
-            <div className="mt-4 sm:hidden"><LandingCta fullWidth>QUIERO REGISTRARME GRATIS</LandingCta></div>
-            <p className="mt-6 text-base font-bold text-[#8bb8ff] sm:mt-7 sm:text-lg">
+            <p className="mt-8 text-base font-bold text-[#8bb8ff] sm:mt-10 sm:text-lg">
               TU CLIENTE TE PREGUNTA:
             </p>
             <h1 className="mt-2 text-[2.45rem] font-black leading-[.92] tracking-tight sm:mt-3 sm:text-6xl sm:leading-[.98]">
@@ -71,15 +67,10 @@ export default function AbcPensionesImssLanding() {
             <p className="mt-2 font-semibold text-[#a9caff]">
               {session.date} · {session.time}
             </p>
-            <div className="mt-8 hidden flex-wrap items-center gap-4 sm:flex">
-              <LandingCta>QUIERO REGISTRARME GRATIS</LandingCta>
-              <span className="text-sm font-semibold text-slate-200">
-                EN LÍNEA · NIVEL INICIAL · SIN EXPERIENCIA PREVIA
-              </span>
-            </div>
           </div>
         </div>
       </section>
+      <section className="bg-[#050b17] px-6 pb-6 sm:pb-8"><div className="mx-auto max-w-md"><LandingCta fullWidth>QUIERO REGISTRARME GRATIS</LandingCta><p className="mt-3 text-center text-xs font-semibold text-slate-300">EN LÍNEA · NIVEL INICIAL · SIN EXPERIENCIA PREVIA</p></div></section>
       <section className="border-y border-blue-100 bg-white px-6 py-7">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-center md:flex-row md:text-left">
           <p className="font-black uppercase tracking-wide text-[#0a2760]">
