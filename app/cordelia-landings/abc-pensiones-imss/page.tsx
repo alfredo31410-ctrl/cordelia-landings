@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ActiveCampaignAbcPensionesForm } from "@/components/forms/ActiveCampaignAbcPensionesForm";
 import { LandingCta } from "./tracking";
 import { landingConfig } from "./config";
@@ -35,7 +36,7 @@ export default function AbcPensionesImssLanding() {
           aria-hidden="true"
           className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,#1758bd_0,transparent_31%),radial-gradient(circle_at_15%_85%,#0c3475_0,transparent_35%)]"
         />
-        <div className="relative mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-12 lg:py-16">
+        <div className="relative mx-auto grid max-w-7xl gap-8 px-6 py-8 sm:px-10 sm:py-12 lg:grid-cols-[1.05fr_.6fr] lg:items-end lg:py-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-3"><span className="h-px w-8 bg-[#5fa3ff]" /><div><p className="text-xl font-black tracking-tight sm:text-2xl">CORDELIA</p><p className="text-[10px] font-semibold tracking-[.16em] text-slate-300">PENSIONES Y ENTRENAMIENTO</p></div></div>
             <p className="mt-8 text-base font-bold text-[#8bb8ff] sm:mt-10 sm:text-lg">
@@ -59,7 +60,9 @@ export default function AbcPensionesImssLanding() {
             <p className="mt-2 font-semibold text-[#a9caff]">
               {session.date} · {session.time}
             </p>
+            <div className="mt-5 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-3 lg:hidden"><div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-white"><Image src="/cordelia-landings/abc-pensiones-imss/norma-tovar.jpg" alt="Norma Tovar" fill unoptimized className="object-cover object-[center_24%]" sizes="64px" /></div><div><p className="text-xs font-bold tracking-[.14em] text-[#8bb8ff]">IMPARTE</p><p className="font-black text-white">Norma Tovar</p><p className="text-xs text-slate-300">El ABC de las Pensiones IMSS</p></div></div>
           </div>
+          <aside className="relative hidden min-h-[560px] overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-2xl lg:block"><Image src="/cordelia-landings/abc-pensiones-imss/norma-tovar.jpg" alt="Norma Tovar, instructora de El ABC de las Pensiones IMSS" fill unoptimized className="object-cover object-[center_24%]" sizes="(min-width: 1024px) 38vw, 0px" /><div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(4,12,29,.94)_0%,transparent_100%)] p-8 pt-28"><p className="text-sm font-bold tracking-[.16em] text-[#8bb8ff]">IMPARTE</p><p className="mt-1 text-3xl font-black">Norma Tovar</p><p className="mt-2 text-slate-200">El ABC de las Pensiones IMSS</p></div></aside>
         </div>
       </section>
       <section className="bg-[#050b17] px-6 pb-6 sm:pb-8"><div className="mx-auto max-w-md"><LandingCta fullWidth>QUIERO REGISTRARME GRATIS</LandingCta><p className="mt-3 text-center text-xs font-semibold text-slate-300">EN LÍNEA · NIVEL INICIAL · SIN EXPERIENCIA PREVIA</p></div></section>
