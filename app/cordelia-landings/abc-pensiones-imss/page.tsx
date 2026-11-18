@@ -31,15 +31,12 @@ export default function AbcPensionesImssLanding() {
   const { session } = landingConfig;
   return (
     <main className="overflow-hidden bg-[#f5f7fb] text-[#07152c]">
-      <section className="relative isolate min-h-[700px] overflow-hidden bg-[#050b17] text-white">
-        <Image
-          src="/cordelia-landings/abc-pensiones-imss/hero-pensiones.png"
-          alt="Planeación de pensiones y ahorro para el retiro"
-          fill
-          priority
-          className="-z-20 object-cover object-center"
-          sizes="100vw"
-        />
+    <section className="relative isolate min-h-[700px] overflow-hidden bg-[#050b17] text-white">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 bg-cover bg-center"
+        style={{ backgroundImage: "url('/cordelia-landings/abc-pensiones-imss/hero-pensiones.png')" }}
+      />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,12,29,.97)_0%,rgba(4,17,43,.88)_42%,rgba(4,18,44,.48)_68%,rgba(4,18,44,.25)_100%)]" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(5,11,23,.72)_0%,transparent_50%)]" />
         <div className="relative mx-auto flex min-h-[700px] max-w-7xl items-center px-6 py-16 sm:px-10 lg:py-20">
@@ -49,7 +46,7 @@ export default function AbcPensionesImssLanding() {
               alt="Cordelia, Pensiones y Entrenamiento"
               width={272}
               height={74}
-              priority
+              unoptimized
               className="h-auto w-56"
             />
             <div className="mt-12 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-sm font-bold tracking-wide">
