@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  trackMetaCustomEvent,
-} from "@/lib/tracking/meta-pixel";
-
 export function LandingCta({
   children,
   fullWidth = false,
 }: Readonly<{ children: React.ReactNode; fullWidth?: boolean }>) {
   function handleClick() {
-    trackMetaCustomEvent("cordelia_cta_clicked", {
-      landing: "abc-pensiones-imss",
-      action: "scroll_to_registration_form",
-    });
     document
       .getElementById("formulario-registro")
       ?.scrollIntoView({ behavior: "smooth", block: "center" });

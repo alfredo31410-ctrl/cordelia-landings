@@ -1,11 +1,12 @@
 import { CORDELIA_META_PIXEL_ID } from "@/lib/tracking/config";
 
-export type PixelEventName = "PageView" | "ViewContent" | "Lead" | "InitiateCheckout" | string;
+export type MetaStandardEventName = "PageView" | "Lead";
 export type PixelEventParameters = Record<string, string | number | boolean | undefined>;
 type MetaAdvancedMatching = { em?: string; ph?: string };
 
 const PENDING_LEAD_STORAGE_KEY = "cordelia_pending_lead";
 const LAST_LEAD_EVENT_ID_STORAGE_KEY = "cordelia_last_lead_event_id";
+const LEAD_SENT_STORAGE_KEY = "cordelia_abc_pensiones_imss_lead_sent";
 
 type PendingLeadEvent = {
   eventId: string;
@@ -23,15 +24,13 @@ export function createMetaEventId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function trackMetaEvent(event: PixelEventName, parameters?: PixelEventParameters, eventId?: string) {
+export function trackMetaStandardEvent(event: MetaStandardEventName, parameters?: PixelEventParameters, eventId?: string) {
   if (typeof window === "undefined" || !window.fbq) return;
-  window.fbq("track", event, parameters, eventId ? { eventID: eventId } : undefined);
-}
-
-export function trackMetaCustomEvent(event: string, parameters?: PixelEventParameters, eventId = createMetaEventId()) {
-  if (typeof window === "undefined" || !window.fbq) return;
-  window.fbq("trackCustom", event, parameters, { eventID: eventId });
-  return eventId;
+  if (eventId) {
+    window.fbq("track", event, parameters ?? {}, { eventID: eventId });
+    return;
+  }
+  window.fbq("track", event, parameters ?? {});
 }
 
 function normalizeEmail(value: string) {
@@ -73,6 +72,13 @@ export function consumeCordeliaLeadEventId() {
   } catch {
     return undefined;
   }
+}
+
+export function trackCordeliaLeadAfterSuccessRedirect() {
+  if (sessionStorage.getItem(LEAD_SENT_STORAGE_KEY)) return;
+  const eventId = consumeCordeliaLeadEventId() ?? createMetaEventId();
+  trackMetaStandardEvent("Lead", { content_name: "cordelia_abc_pensiones_imss" }, eventId);
+  sessionStorage.setItem(LEAD_SENT_STORAGE_KEY, eventId);
 }
 
 /** Event ID preserved for a future Conversions API implementation; contains no personal data. */
