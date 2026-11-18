@@ -36,7 +36,7 @@ export default function AbcPensionesImssLanding() {
           aria-hidden="true"
           className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,#1758bd_0,transparent_31%),radial-gradient(circle_at_15%_85%,#0c3475_0,transparent_35%)]"
         />
-        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-10 lg:py-16">
+        <div className="relative mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-12 lg:py-16">
           <div className="max-w-2xl">
             <Image
               src="/logos/Logotipo%20CORDELIA%20blanco.png"
@@ -44,24 +44,25 @@ export default function AbcPensionesImssLanding() {
               width={272}
               height={74}
               unoptimized
-              className="h-auto w-56"
+              className="h-auto w-48 sm:w-56"
             />
-            <div className="mt-10 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-sm font-black tracking-wide">
+            <div className="mt-6 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-xs font-black tracking-wide sm:mt-10 sm:text-sm">
               CLASE GRATUITA EN VIVO PARA CONTADORES, ABOGADOS Y ASESORES
             </div>
-            <p className="mt-7 text-lg font-bold text-[#8bb8ff]">
+            <div className="mt-4 sm:hidden"><LandingCta fullWidth>QUIERO REGISTRARME GRATIS</LandingCta></div>
+            <p className="mt-6 text-base font-bold text-[#8bb8ff] sm:mt-7 sm:text-lg">
               TU CLIENTE TE PREGUNTA:
             </p>
-            <h1 className="mt-3 text-4xl font-black leading-[.98] tracking-tight sm:text-6xl">
+            <h1 className="mt-2 text-[2.45rem] font-black leading-[.92] tracking-tight sm:mt-3 sm:text-6xl sm:leading-[.98]">
               “¿CUÁNTO ME TOCA DE PENSIÓN?”
               <br />
               <span className="text-[#5fa3ff]">¿SABES POR DÓNDE EMPEZAR?</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-100 sm:text-xl">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-100 sm:mt-6 sm:text-xl sm:leading-8">
               Aprende qué revisar antes de responder y descubre cómo dar tus
               primeros pasos en la asesoría de pensiones IMSS.
             </p>
-            <p className="mt-6 font-bold text-white">
+            <p className="mt-5 font-bold text-white sm:mt-6">
               {session.title}{" "}
               <span className="font-medium text-slate-300">
                 · Con {session.presenter}
@@ -70,7 +71,7 @@ export default function AbcPensionesImssLanding() {
             <p className="mt-2 font-semibold text-[#a9caff]">
               {session.date} · {session.time}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 hidden flex-wrap items-center gap-4 sm:flex">
               <LandingCta>QUIERO REGISTRARME GRATIS</LandingCta>
               <span className="text-sm font-semibold text-slate-200">
                 EN LÍNEA · NIVEL INICIAL · SIN EXPERIENCIA PREVIA
