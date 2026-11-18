@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { ActiveCampaignAbcPensionesForm } from "@/components/forms/ActiveCampaignAbcPensionesForm";
 import { LandingCta } from "./tracking";
 import { landingConfig } from "./config";
@@ -38,14 +37,7 @@ export default function AbcPensionesImssLanding() {
         />
         <div className="relative mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-12 lg:py-16">
           <div className="max-w-2xl">
-            <Image
-              src="/logos/Logotipo%20CORDELIA%20blanco.png"
-              alt="Cordelia, Pensiones y Entrenamiento"
-              width={272}
-              height={74}
-              unoptimized
-              className="h-auto w-48 sm:w-56"
-            />
+            <div className="inline-flex items-center gap-3"><span className="h-px w-8 bg-[#5fa3ff]" /><div><p className="text-xl font-black tracking-tight sm:text-2xl">CORDELIA</p><p className="text-[10px] font-semibold tracking-[.16em] text-slate-300">PENSIONES Y ENTRENAMIENTO</p></div></div>
             <p className="mt-8 text-base font-bold text-[#8bb8ff] sm:mt-10 sm:text-lg">
               TU CLIENTE TE PREGUNTA:
             </p>
@@ -71,6 +63,7 @@ export default function AbcPensionesImssLanding() {
         </div>
       </section>
       <section className="bg-[#050b17] px-6 pb-6 sm:pb-8"><div className="mx-auto max-w-md"><LandingCta fullWidth>QUIERO REGISTRARME GRATIS</LandingCta><p className="mt-3 text-center text-xs font-semibold text-slate-300">EN LÍNEA · NIVEL INICIAL · SIN EXPERIENCIA PREVIA</p></div></section>
+      <div aria-hidden="true" className="h-12 bg-[linear-gradient(180deg,#050b17_0%,#0c2657_48%,#f5f7fb_100%)]" />
       <section className="border-y border-blue-100 bg-white px-6 py-7">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-center md:flex-row md:text-left">
           <p className="font-black uppercase tracking-wide text-[#0a2760]">
