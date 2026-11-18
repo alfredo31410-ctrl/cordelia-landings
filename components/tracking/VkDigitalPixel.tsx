@@ -1,13 +1,25 @@
 "use client";
 
 import Script from "next/script";
+import { CORDELIA_VK_PIXEL_ID } from "@/lib/tracking/config";
 
-const pixelId = process.env.NEXT_PUBLIC_VK_PIXEL_ID;
+const vkDigitalLeadsScript = `
+(function(w, d, s, u) {
+  w.vkPixel = w.vkPixel || { _q: [] };
+  w.vkPixel._q.push(['init', '${CORDELIA_VK_PIXEL_ID}']);
+  var js = d.createElement(s);
+  js.src = u;
+  js.async = true;
+  d.head.appendChild(js);
+})(window, document, 'script', 'https://cf.vkdigital.com.br/pixel.js?v=55');
+`;
 
 export function VkDigitalPixel() {
-  if (!pixelId) return null;
-  return <>
-    <Script id="vk-digital-pixel-init" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `window._tmr=window._tmr||[];window._tmr.push({type:'pageView',id:'${pixelId}',start:Date.now()});` }} />
-    <Script id="vk-digital-pixel" strategy="afterInteractive" src="https://top-fwz1.mail.ru/js/code.js" />
-  </>;
+  return (
+    <Script
+      id="vk-digital-leads-pixel"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{ __html: vkDigitalLeadsScript }}
+    />
+  );
 }

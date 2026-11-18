@@ -10,11 +10,18 @@ export function captureTraffic(search: string): TrafficData {
     if (value) traffic[key] = value;
     return traffic;
   }, {});
-  if (Object.keys(values).length > 0) sessionStorage.setItem(TRAFFIC_STORAGE_KEY, JSON.stringify(values));
+  if (Object.keys(values).length > 0) {
+    const serialized = JSON.stringify(values);
+    try { sessionStorage.setItem(TRAFFIC_STORAGE_KEY, serialized); } catch { /* Storage no debe bloquear la landing. */ }
+  }
   return values;
 }
 
 export function getStoredTraffic(): TrafficData {
-  try { return JSON.parse(sessionStorage.getItem(TRAFFIC_STORAGE_KEY) ?? "{}"); }
-  catch { return {}; }
+  if (typeof window === "undefined") return {};
+  const current = captureTraffic(window.location.search);
+  if (Object.keys(current).length > 0) return current;
+  try {
+    return JSON.parse(sessionStorage.getItem(TRAFFIC_STORAGE_KEY) ?? "{}") as TrafficData;
+  } catch { return {}; }
 }

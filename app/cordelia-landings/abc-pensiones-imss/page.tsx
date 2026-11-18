@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ActiveCampaignAbcPensionesForm } from "@/components/forms/ActiveCampaignAbcPensionesForm";
 import { LandingCta } from "./tracking";
 import { landingConfig } from "./config";
+import { CampaignTracking } from "./campaign-tracking";
 
 export const metadata: Metadata = {
   title: landingConfig.title,
@@ -31,6 +32,7 @@ export default function AbcPensionesImssLanding() {
   const { session } = landingConfig;
   return (
     <main className="overflow-hidden bg-[#f5f7fb] text-[#07152c]">
+      <CampaignTracking />
       <section className="relative isolate overflow-hidden bg-[#050b17] text-white">
         <div
           aria-hidden="true"

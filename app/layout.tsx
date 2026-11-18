@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import "./globals.css";
-import { MetaPixel } from "@/components/tracking/MetaPixel";
 import { UTMTracking } from "@/components/tracking/UTMTracking";
 import { VkDigitalPixel } from "@/components/tracking/VkDigitalPixel";
 
@@ -15,7 +13,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="es">
       <body>
         <UTMTracking />
-        <Suspense fallback={null}><MetaPixel /></Suspense>
         <VkDigitalPixel />
         {children}
       </body>

@@ -1,87 +1,82 @@
 import { CORDELIA_META_PIXEL_ID } from "@/lib/tracking/config";
 
-export type MetaStandardEventName = "PageView" | "Lead";
-export type PixelEventParameters = Record<string, string | number | boolean | undefined>;
-type MetaAdvancedMatching = { em?: string; ph?: string };
+export type MetaEventPayload = Record<string, unknown>;
 
-const PENDING_LEAD_STORAGE_KEY = "cordelia_pending_lead";
-const LAST_LEAD_EVENT_ID_STORAGE_KEY = "cordelia_last_lead_event_id";
-const LEAD_SENT_STORAGE_KEY = "cordelia_abc_pensiones_imss_lead_sent";
-
-type PendingLeadEvent = {
-  eventId: string;
-  createdAt: number;
+type MetaPixelRuntime = ((command: string, ...args: unknown[]) => void) & {
+  callMethod?: (command: string, ...args: unknown[]) => void;
+  queue: unknown[][];
+  push: (command: string, ...args: unknown[]) => void;
+  loaded: boolean;
+  version: string;
 };
 
 declare global {
   interface Window {
-    fbq?: (...args: unknown[]) => void;
+    fbq?: (command: string, ...args: unknown[]) => void;
+    _fbq?: (command: string, ...args: unknown[]) => void;
+    __cordeliaMetaPixelInitialized?: boolean;
   }
 }
 
-export function createMetaEventId(): string {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
-  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+/** Replica el cargador de Meta de la landing IMSS de referencia. */
+export function initializeMetaPixel(
+  pixelId = CORDELIA_META_PIXEL_ID,
+  { trackPageView = true }: { trackPageView?: boolean } = {},
+) {
+  if (typeof window === "undefined") return;
+
+  if (typeof window.fbq !== "function") {
+    const fbq = function metaPixelQueue(command: string, ...args: unknown[]) {
+      if (fbq.callMethod) {
+        fbq.callMethod(command, ...args);
+        return;
+      }
+      fbq.queue.push([command, ...args]);
+    } as MetaPixelRuntime;
+
+    fbq.queue = [];
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = "2.0";
+    window.fbq = fbq;
+    window._fbq = fbq;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    script.dataset.cordeliaMetaPixel = "true";
+    const firstScript = document.getElementsByTagName("script")[0];
+    if (firstScript?.parentNode) firstScript.parentNode.insertBefore(script, firstScript);
+    else document.head.appendChild(script);
+  }
+
+  if (!window.__cordeliaMetaPixelInitialized && window.fbq) {
+    window.fbq("init", pixelId);
+    if (trackPageView) window.fbq("track", "PageView");
+    window.__cordeliaMetaPixelInitialized = true;
+  }
 }
 
-export function trackMetaStandardEvent(event: MetaStandardEventName, parameters?: PixelEventParameters, eventId?: string) {
-  if (typeof window === "undefined" || !window.fbq) return;
-  if (eventId) {
-    window.fbq("track", event, parameters ?? {}, { eventID: eventId });
+function runWhenMetaPixelReady(callback: () => void, attempts = 20) {
+  if (typeof window === "undefined") return;
+  if (window.fbq) {
+    callback();
     return;
   }
-  window.fbq("track", event, parameters ?? {});
+  if (attempts > 0) window.setTimeout(() => runWhenMetaPixelReady(callback, attempts - 1), 150);
 }
 
-function normalizeEmail(value: string) {
-  const email = value.trim().toLowerCase();
-  return email || undefined;
+export function trackMetaEvent(event: string, data?: MetaEventPayload, options?: MetaEventPayload) {
+  runWhenMetaPixelReady(() => {
+    if (!window.fbq) return;
+    if (data && options) window.fbq("track", event, data, options);
+    else if (data) window.fbq("track", event, data);
+    else window.fbq("track", event);
+  });
 }
 
-function normalizeMexicanPhone(value: string) {
-  const digits = value.replace(/\D/g, "");
-  if (!digits) return undefined;
-  return digits.startsWith("52") ? digits : `52${digits}`;
-}
-
-function configureAdvancedMatching(email?: string, phone?: string) {
-  const matching: MetaAdvancedMatching = {
-    em: email ? normalizeEmail(email) : undefined,
-    ph: phone ? normalizeMexicanPhone(phone) : undefined,
-  };
-  if (typeof window === "undefined" || !window.fbq || (!matching.em && !matching.ph)) return;
-  window.fbq("init", CORDELIA_META_PIXEL_ID, matching);
-}
-
-export function prepareCordeliaLead(email?: string, phone?: string) {
-  const eventId = createMetaEventId();
-  configureAdvancedMatching(email, phone);
-  sessionStorage.setItem(PENDING_LEAD_STORAGE_KEY, JSON.stringify({ eventId, createdAt: Date.now() } satisfies PendingLeadEvent));
-  return eventId;
-}
-
-export function consumeCordeliaLeadEventId() {
-  try {
-    const raw = sessionStorage.getItem(PENDING_LEAD_STORAGE_KEY);
-    if (!raw) return undefined;
-    const pending = JSON.parse(raw) as PendingLeadEvent;
-    sessionStorage.removeItem(PENDING_LEAD_STORAGE_KEY);
-    if (!pending.eventId || Date.now() - pending.createdAt > 15 * 60 * 1000) return undefined;
-    sessionStorage.setItem(LAST_LEAD_EVENT_ID_STORAGE_KEY, pending.eventId);
-    return pending.eventId;
-  } catch {
-    return undefined;
-  }
-}
-
-export function trackCordeliaLeadAfterSuccessRedirect() {
-  if (sessionStorage.getItem(LEAD_SENT_STORAGE_KEY)) return;
-  const eventId = consumeCordeliaLeadEventId() ?? createMetaEventId();
-  trackMetaStandardEvent("Lead", { content_name: "cordelia_abc_pensiones_imss" }, eventId);
-  sessionStorage.setItem(LEAD_SENT_STORAGE_KEY, eventId);
-}
-
-/** Event ID preserved for a future Conversions API implementation; contains no personal data. */
-export function getLastCordeliaLeadEventId() {
-  return sessionStorage.getItem(LAST_LEAD_EVENT_ID_STORAGE_KEY) ?? undefined;
+export function trackMetaCustomEventImmediate(event: string, data?: MetaEventPayload) {
+  if (typeof window === "undefined" || typeof window.fbq !== "function") return;
+  if (data) window.fbq("trackCustom", event, data);
+  else window.fbq("trackCustom", event);
 }

@@ -1,20 +1,37 @@
 "use client";
 
 import Script from "next/script";
-import { FormEvent } from "react";
-import { prepareCordeliaLead } from "@/lib/tracking/meta-pixel";
+import { FormEvent, useEffect, useRef } from "react";
+import {
+  createConfirmationId,
+  persistRegistrationConfirmation,
+  prepareActiveCampaignForm,
+} from "@/app/cordelia-landings/abc-pensiones-imss/registration-adapter";
 
 export function ActiveCampaignAbcPensionesForm() {
+  const hostRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    const prepare = () => {
+      const form = host.querySelector<HTMLFormElement>("form");
+      if (form) prepareActiveCampaignForm(form);
+    };
+    prepare();
+    const observer = new MutationObserver(prepare);
+    observer.observe(host, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   function handleSubmitCapture(event: FormEvent<HTMLDivElement>) {
     const form = event.target;
     if (!(form instanceof HTMLFormElement) || !form.checkValidity()) return;
-    const email = form.querySelector<HTMLInputElement>('input[type="email"], input[name*="email" i]')?.value;
-    const phone = form.querySelector<HTMLInputElement>('input[type="tel"], input[name*="phone" i], input[name*="telefono" i]')?.value;
-    prepareCordeliaLead(email, phone);
+    persistRegistrationConfirmation(createConfirmationId());
   }
 
   return (
-    <div onSubmitCapture={handleSubmitCapture}>
+    <div ref={hostRef} onSubmitCapture={handleSubmitCapture}>
       <div className="_form_396" />
       <Script
         id="activecampaign-form-396"
