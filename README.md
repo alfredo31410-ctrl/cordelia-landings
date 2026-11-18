@@ -15,14 +15,15 @@ Validaciones: `npm run lint`, `npm run typecheck` y `npm run build`.
 
 | Variable | Uso |
 | --- | --- |
-| `NEXT_PUBLIC_META_PIXEL_ID` | ID del Meta Pixel. |
 | `NEXT_PUBLIC_VK_PIXEL_ID` | ID del píxel VK Digital. |
 
 No añadas secretos, tokens o datos de CRM/pagos al repositorio. Todas las claves de `sessionStorage` de esta aplicación usan el prefijo `cordelia_`; actualmente se conserva la atribución en `cordelia_traffic`.
 
 ## Tracking
 
-El layout carga PageView de Meta y VK Digital cuando sus IDs existen. Se capturan `utm_*`, `fbclid`, `campaign_id`, `adset_id`, `ad_id` y `placement`. `lib/tracking/meta-pixel.ts` expone eventos estándar (`ViewContent`, `Lead`, `InitiateCheckout`) y eventos personalizados. La ruta de gracias dispara `Lead`; los CTA del ABC desplazan al formulario y disparan `InitiateCheckout` y `cordelia_cta_clicked`, sin pagos ni redirecciones reales. La URL del grupo de WhatsApp se centraliza en `config.ts` de la landing. El formulario de registro carga el embed público de ActiveCampaign con ID `396`; su redirección tras enviar debe configurarse en ActiveCampaign hacia `/cordelia-landings/abc-pensiones-imss/gracias`.
+El layout carga el Meta Pixel global y registra un único `PageView` por URL visitada. El ID público de Meta compartido por las landings de Cordelia se centraliza en `lib/tracking/config.ts`; no requiere variables de Vercel. Se capturan `utm_*`, `fbclid`, `campaign_id`, `adset_id`, `ad_id` y `placement`. `lib/tracking/meta-pixel.ts` expone eventos estándar y personalizados con `eventID` para una futura deduplicación con Conversiones API. Los CTA gratuitos del ABC solo disparan `cordelia_cta_clicked`; no usan `InitiateCheckout`.
+
+El formulario de registro carga el embed público de ActiveCampaign con ID `396`. Al enviarlo, prepara un `eventID` de Lead y utiliza correo/teléfono normalizados únicamente para advanced matching del Pixel; estos datos no se almacenan ni se registran en logs. Configura el redirect de éxito de ActiveCampaign hacia `https://www.cordeliacapacitacion.com/cordelia-landings/abc-pensiones-imss/gracias?ac_success=1`. Solo esa llegada, combinada con el estado de envío de la misma sesión, dispara `Lead` una vez; recargar la página de gracias no lo vuelve a disparar.
 
 ## Assets
 

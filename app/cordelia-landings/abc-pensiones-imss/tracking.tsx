@@ -2,7 +2,6 @@
 
 import {
   trackMetaCustomEvent,
-  trackMetaEvent,
 } from "@/lib/tracking/meta-pixel";
 
 export function LandingCta({
@@ -10,11 +9,9 @@ export function LandingCta({
   fullWidth = false,
 }: Readonly<{ children: React.ReactNode; fullWidth?: boolean }>) {
   function handleClick() {
-    trackMetaEvent("InitiateCheckout", {
-      content_name: "cordelia_abc_pensiones_imss",
-    });
     trackMetaCustomEvent("cordelia_cta_clicked", {
       landing: "abc-pensiones-imss",
+      action: "scroll_to_registration_form",
     });
     document
       .getElementById("formulario-registro")
