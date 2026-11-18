@@ -4,23 +4,200 @@ import { ActiveCampaignAbcPensionesForm } from "@/components/forms/ActiveCampaig
 import { LandingCta } from "./tracking";
 import { landingConfig } from "./config";
 
-export const metadata: Metadata = { title: landingConfig.title, description: landingConfig.description };
+export const metadata: Metadata = {
+  title: landingConfig.title,
+  description: landingConfig.description,
+};
 
 const benefits = [
-  ["01", "Lee el historial con más contexto", "Entiende por qué antes de calcular hay que revisar los datos que forman tu historia de cotización."],
-  ["02", "Identifica las variables clave", "Semanas cotizadas, salario base y otros factores se interpretan juntos, no por separado."],
-  ["03", "Construye criterio profesional", "Conoce una ruta ordenada para orientar con responsabilidad y tomar mejores decisiones."],
+  [
+    "01",
+    "Lee el historial con más contexto",
+    "Entiende por qué antes de calcular hay que revisar los datos que forman tu historia de cotización.",
+  ],
+  [
+    "02",
+    "Identifica las variables clave",
+    "Semanas cotizadas, salario base y otros factores se interpretan juntos, no por separado.",
+  ],
+  [
+    "03",
+    "Construye criterio profesional",
+    "Conoce una ruta ordenada para orientar con responsabilidad y tomar mejores decisiones.",
+  ],
 ] as const;
 
 export default function AbcPensionesImssLanding() {
   const { session } = landingConfig;
-  return <main className="overflow-hidden bg-[#f5f7fb] text-[#07152c]">
-    <section className="relative isolate min-h-[700px] overflow-hidden bg-[#050b17] text-white"><Image src="/cordelia-landings/abc-pensiones-imss/hero-pensiones.png" alt="Planeación de pensiones y ahorro para el retiro" fill priority className="-z-20 object-cover object-center" sizes="100vw" /><div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,12,29,.97)_0%,rgba(4,17,43,.88)_42%,rgba(4,18,44,.48)_68%,rgba(4,18,44,.25)_100%)]" /><div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(5,11,23,.72)_0%,transparent_50%)]" /><div className="relative mx-auto flex min-h-[700px] max-w-7xl items-center px-6 py-16 sm:px-10 lg:py-20">
-      <div className="max-w-2xl"><Image src="/logos/Logotipo%20CORDELIA%20blanco.png" alt="Cordelia, Pensiones y Entrenamiento" width={272} height={74} priority className="h-auto w-56" /><div className="mt-12 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-sm font-bold tracking-wide">CLASE GRATUITA · EN VIVO · EN LÍNEA</div><h1 className="mt-6 text-5xl font-black leading-[.94] tracking-tight sm:text-6xl">¿CUÁNTO ME<br /><span className="text-[#5fa3ff]">TOCA DE</span><br />PENSIÓN?</h1><p className="mt-6 max-w-xl text-xl leading-8 text-slate-100">Una pregunta sencilla. Una respuesta que exige preparación, contexto y criterio.</p><div className="mt-8 flex flex-wrap items-center gap-4"><LandingCta>REGISTRARME GRATIS</LandingCta><span className="text-sm font-semibold text-slate-200">Con {session.presenter}</span></div></div>
-    </div></section>
-    <section className="border-y border-blue-100 bg-white px-6 py-7"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-center md:flex-row md:text-left"><p className="font-black uppercase tracking-wide text-[#0a2760]">{session.title} <span className="font-medium text-slate-600">· {session.presenter}</span></p><p className="font-bold text-[#124a9b]">{session.date} · {session.time}</p></div></section>
-    <section className="mx-auto max-w-6xl px-6 py-20"><div className="max-w-3xl"><p className="font-bold tracking-[.18em] text-[#1661c7]">MÁS QUE NÚMEROS</p><h2 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Tener los datos no es saber interpretarlos.</h2><p className="mt-5 text-lg leading-8 text-slate-600">Dos personas pueden tener la misma edad y las mismas semanas cotizadas, pero no necesariamente el mismo resultado. Aprende por dónde empezar a analizar.</p></div><div className="mt-12 grid gap-5 md:grid-cols-3">{benefits.map(([number, title, description]) => <article key={number} className="rounded-2xl border border-blue-100 bg-white p-7 shadow-sm"><span className="text-sm font-black text-[#1760c5]">{number}</span><h3 className="mt-6 text-2xl font-extrabold">{title}</h3><p className="mt-4 leading-7 text-slate-600">{description}</p></article>)}</div><div className="mt-14 rounded-3xl bg-[#e9f1ff] px-6 py-10 text-center sm:px-10"><p className="text-xl font-extrabold text-[#07152c]">Empieza a entender el panorama completo.</p><p className="mx-auto mt-2 max-w-xl text-slate-600">Reserva tu lugar sin costo en la clase en vivo con Norma Tovar.</p><div className="mt-6"><LandingCta>REGISTRARME GRATIS</LandingCta></div></div></section>
-    <section className="bg-[#07152c] px-6 py-20 text-white"><div className="mx-auto max-w-4xl text-center"><p className="font-bold tracking-[.18em] text-[#75aeff]">UNA SESIÓN PARA ORIENTAR MEJOR</p><h2 className="mt-4 text-4xl font-black leading-tight">No son solo semanas cotizadas.</h2><p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-300">Son años de trabajo que merecen una orientación responsable. En esta clase conocerás el método para revisar el historial, desarrollar criterio profesional y asesorar con mayor seguridad.</p><ul className="mx-auto mt-10 grid max-w-3xl gap-4 text-left text-lg font-semibold sm:grid-cols-2"><li className="rounded-xl border border-white/10 bg-white/5 p-4">✓ Historial de cotización</li><li className="rounded-xl border border-white/10 bg-white/5 p-4">✓ Salario base</li><li className="rounded-xl border border-white/10 bg-white/5 p-4">✓ Variables clave para interpretar</li><li className="rounded-xl border border-white/10 bg-white/5 p-4">✓ Decisiones con criterio</li></ul><div className="mt-10"><LandingCta>REGISTRARME GRATIS</LandingCta></div></div></section>
-    <section id="registro" className="scroll-mt-8 bg-[linear-gradient(135deg,#0e3f93,#1264d3)] px-6 py-20"><div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[.9fr_1.1fr]"><div className="text-white"><p className="font-bold tracking-[.18em] text-blue-200">RESERVA TU LUGAR</p><h2 className="mt-4 text-4xl font-black leading-tight">Empieza a preparar mejores respuestas.</h2><p className="mt-5 text-lg leading-8 text-blue-100">Regístrate sin costo para la clase en vivo <strong>{session.title}</strong> con {session.presenter}.</p><div className="mt-8 border-l-2 border-blue-200 pl-5 font-semibold"><p>{session.date}</p><p>{session.time}</p><p className="mt-2 text-blue-100">En vivo · En línea · Gratis</p></div></div><div id="formulario-registro" className="scroll-mt-8 rounded-3xl bg-white p-6 shadow-2xl sm:p-8"><h3 className="text-2xl font-black text-[#07152c]">Regístrate gratis</h3><p className="mt-2 text-slate-600">Completa el formulario y recibe los detalles para asistir.</p><div className="mt-6"><ActiveCampaignAbcPensionesForm /></div></div></div></section>
-  </main>;
+  return (
+    <main className="overflow-hidden bg-[#f5f7fb] text-[#07152c]">
+      <section className="relative isolate min-h-[700px] overflow-hidden bg-[#050b17] text-white">
+        <Image
+          src="/cordelia-landings/abc-pensiones-imss/hero-pensiones.png"
+          alt="Planeación de pensiones y ahorro para el retiro"
+          fill
+          priority
+          className="-z-20 object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,12,29,.97)_0%,rgba(4,17,43,.88)_42%,rgba(4,18,44,.48)_68%,rgba(4,18,44,.25)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(5,11,23,.72)_0%,transparent_50%)]" />
+        <div className="relative mx-auto flex min-h-[700px] max-w-7xl items-center px-6 py-16 sm:px-10 lg:py-20">
+          <div className="max-w-2xl">
+            <Image
+              src="/logos/Logotipo%20CORDELIA%20blanco.png"
+              alt="Cordelia, Pensiones y Entrenamiento"
+              width={272}
+              height={74}
+              priority
+              className="h-auto w-56"
+            />
+            <div className="mt-12 inline-flex rounded-md border border-blue-300/30 bg-[#17438a] px-4 py-2 text-sm font-bold tracking-wide">
+              CLASE GRATUITA · EN VIVO · EN LÍNEA
+            </div>
+            <h1 className="mt-6 text-5xl font-black leading-[.94] tracking-tight sm:text-6xl">
+              ¿CUÁNTO ME
+              <br />
+              <span className="text-[#5fa3ff]">TOCA DE</span>
+              <br />
+              PENSIÓN?
+            </h1>
+            <p className="mt-6 max-w-xl text-xl leading-8 text-slate-100">
+              Una pregunta sencilla. Una respuesta que exige preparación,
+              contexto y criterio.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <LandingCta>REGISTRARME GRATIS</LandingCta>
+              <span className="text-sm font-semibold text-slate-200">
+                Con {session.presenter}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="border-y border-blue-100 bg-white px-6 py-7">
+        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-center md:flex-row md:text-left">
+          <p className="font-black uppercase tracking-wide text-[#0a2760]">
+            {session.title}{" "}
+            <span className="font-medium text-slate-600">
+              · {session.presenter}
+            </span>
+          </p>
+          <p className="font-bold text-[#124a9b]">
+            {session.date} · {session.time}
+          </p>
+        </div>
+      </section>
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="max-w-3xl">
+          <p className="font-bold tracking-[.18em] text-[#1661c7]">
+            MÁS QUE NÚMEROS
+          </p>
+          <h2 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">
+            Tener los datos no es saber interpretarlos.
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-slate-600">
+            Dos personas pueden tener la misma edad y las mismas semanas
+            cotizadas, pero no necesariamente el mismo resultado. Aprende por
+            dónde empezar a analizar.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {benefits.map(([number, title, description]) => (
+            <article
+              key={number}
+              className="rounded-2xl border border-blue-100 bg-white p-7 shadow-sm"
+            >
+              <span className="text-sm font-black text-[#1760c5]">
+                {number}
+              </span>
+              <h3 className="mt-6 text-2xl font-extrabold">{title}</h3>
+              <p className="mt-4 leading-7 text-slate-600">{description}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-14 rounded-3xl bg-[#e9f1ff] px-6 py-10 text-center sm:px-10">
+          <p className="text-xl font-extrabold text-[#07152c]">
+            Empieza a entender el panorama completo.
+          </p>
+          <p className="mx-auto mt-2 max-w-xl text-slate-600">
+            Reserva tu lugar sin costo en la clase en vivo con Norma Tovar.
+          </p>
+          <div className="mt-6">
+            <LandingCta>REGISTRARME GRATIS</LandingCta>
+          </div>
+        </div>
+      </section>
+      <section className="bg-[#07152c] px-6 py-20 text-white">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="font-bold tracking-[.18em] text-[#75aeff]">
+            UNA SESIÓN PARA ORIENTAR MEJOR
+          </p>
+          <h2 className="mt-4 text-4xl font-black leading-tight">
+            No son solo semanas cotizadas.
+          </h2>
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-300">
+            Son años de trabajo que merecen una orientación responsable. En esta
+            clase conocerás el método para revisar el historial, desarrollar
+            criterio profesional y asesorar con mayor seguridad.
+          </p>
+          <ul className="mx-auto mt-10 grid max-w-3xl gap-4 text-left text-lg font-semibold sm:grid-cols-2">
+            <li className="rounded-xl border border-white/10 bg-white/5 p-4">
+              ✓ Historial de cotización
+            </li>
+            <li className="rounded-xl border border-white/10 bg-white/5 p-4">
+              ✓ Salario base
+            </li>
+            <li className="rounded-xl border border-white/10 bg-white/5 p-4">
+              ✓ Variables clave para interpretar
+            </li>
+            <li className="rounded-xl border border-white/10 bg-white/5 p-4">
+              ✓ Decisiones con criterio
+            </li>
+          </ul>
+          <div className="mt-10">
+            <LandingCta>REGISTRARME GRATIS</LandingCta>
+          </div>
+        </div>
+      </section>
+      <section
+        id="registro"
+        className="scroll-mt-8 bg-[linear-gradient(135deg,#0e3f93,#1264d3)] px-6 py-20"
+      >
+        <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[.9fr_1.1fr]">
+          <div className="text-white">
+            <p className="font-bold tracking-[.18em] text-blue-200">
+              RESERVA TU LUGAR
+            </p>
+            <h2 className="mt-4 text-4xl font-black leading-tight">
+              Empieza a preparar mejores respuestas.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-blue-100">
+              Regístrate sin costo para la clase en vivo{" "}
+              <strong>{session.title}</strong> con {session.presenter}.
+            </p>
+            <div className="mt-8 border-l-2 border-blue-200 pl-5 font-semibold">
+              <p>{session.date}</p>
+              <p>{session.time}</p>
+              <p className="mt-2 text-blue-100">En vivo · En línea · Gratis</p>
+            </div>
+          </div>
+          <div
+            id="formulario-registro"
+            className="scroll-mt-8 rounded-3xl bg-white p-6 shadow-2xl sm:p-8"
+          >
+            <h3 className="text-2xl font-black text-[#07152c]">
+              Regístrate gratis
+            </h3>
+            <p className="mt-2 text-slate-600">
+              Completa el formulario y recibe los detalles para asistir.
+            </p>
+            <div className="mt-6">
+              <ActiveCampaignAbcPensionesForm />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }
